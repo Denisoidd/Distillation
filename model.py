@@ -20,6 +20,7 @@ def teacher_model(im_h, im_w, n_cl):
         layers.Conv2D(64, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
         layers.Flatten(),
+        layers.Dropout(0.3),
         layers.Dense(128, activation='relu'),
         layers.Dense(n_cl)
     ])
