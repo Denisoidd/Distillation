@@ -63,6 +63,14 @@ val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 teacher_model = teacher_model(im_h, im_w, n_cl)
 teacher_model.summary()
 
+# save model callback
+list_of_callbacks = []
+model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+    filepath=str(pathlib.Path(__file__).parent.absolute()) + config["teacher"]["train"]["save_path"],
+    save_freq=1)
+list_of_callbacks.append(model_checkpoint_callback)
+
+
 # compile the model
 teacher_model.compile(optimizer='adam',
                       loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -72,5 +80,6 @@ teacher_model.compile(optimizer='adam',
 history = teacher_model.fit(
     train_ds,
     validation_data=val_ds,
+    callbacks=list_of_callbacks,
     epochs=ep
 )
