@@ -13,7 +13,7 @@ if image_count:
     print("Data loaded correctly")
 
 # load config
-config = load_config("config.yaml")
+config = load_config(str(pathlib.Path(__file__).parent.absolute()) + "/config.yaml")
 if config:
     print("Config loaded correctly")
 
