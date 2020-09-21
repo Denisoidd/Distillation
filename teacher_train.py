@@ -8,4 +8,5 @@ data_dir = pathlib.Path(data_dir)
 
 # check if it was well downloaded
 image_count = len(list(data_dir.glob('*/*.jpg')))
-print(image_count)
+if image_count:
+    print("Data loaded correctly")
