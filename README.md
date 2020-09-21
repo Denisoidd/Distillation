@@ -1,4 +1,4 @@
 # Distillation
-Distillation on classification problem
+Distillation on classification problem implemented in Tensorflow
 
 
