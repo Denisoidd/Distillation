@@ -1,6 +1,7 @@
 teacher:
   train:
     b_s: 32
+    epochs: 10
     im_h: 180
     im_w: 180
     n_classes: 5

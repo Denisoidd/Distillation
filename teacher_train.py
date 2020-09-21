@@ -23,33 +23,34 @@ val_spl = config["teacher"]["train"]["val_split"]
 im_h, im_w = config["teacher"]["train"]["im_h"], config["teacher"]["train"]["im_w"]
 b_s = config["teacher"]["train"]["b_s"]
 n_cl = config["teacher"]["train"]["n_classes"]
+ep = config["teacher"]["train"]["epochs"]
 
 # divide data on train and validation
 # load train part
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(
-  data_dir,
-  validation_split=val_spl,
-  subset="training",
-  seed=123,
-  image_size=(im_h, im_w),
-  batch_size=b_s)
+    data_dir,
+    validation_split=val_spl,
+    subset="training",
+    seed=123,
+    image_size=(im_h, im_w),
+    batch_size=b_s)
 
 if train_ds:
     print("Train dataset prepared successfully")
 
 # load validation part
 val_ds = tf.keras.preprocessing.image_dataset_from_directory(
-  data_dir,
-  validation_split=val_spl,
-  subset="validation",
-  seed=123,
-  image_size=(im_h, im_w),
-  batch_size=b_s)
+    data_dir,
+    validation_split=val_spl,
+    subset="validation",
+    seed=123,
+    image_size=(im_h, im_w),
+    batch_size=b_s)
 
 if val_ds:
     print("Val dataset prepared successfully")
 
-# In the following lines we will make sure that we use our memory properly while reading
+# in the following lines we will make sure that we use our memory properly while reading
 # the images for trainig. Cache keeps images in memory after they were loaded. Prefetch
 # overlaps data preprocessing and model execution while training.
 
@@ -58,12 +59,18 @@ AUTOTUNE = tf.data.experimental.AUTOTUNE
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
-# Get the teacher model
+# get the teacher model
 teacher_model = teacher_model(im_h, im_w, n_cl)
-print(teacher_model.summary())
+teacher_model.summary()
 
+# compile the model
+teacher_model.compile(optimizer='adam',
+                      loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                      metrics=['accuracy'])
 
-
-
-
-
+# train the model
+history = teacher_model.fit(
+    train_ds,
+    validation_data=val_ds,
+    epochs=ep
+)
