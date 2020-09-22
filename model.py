@@ -12,6 +12,7 @@ def teacher_model(im_h, im_w, n_cl):
     :return: sequential model
     """
     return Sequential([
+        data_augmentation_layer(im_h, im_w),
         layers.experimental.preprocessing.Rescaling(1. / 255, input_shape=(im_h, im_w, 3)),
         layers.Conv2D(16, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
@@ -35,6 +36,7 @@ def student_model(im_h, im_w, n_cl):
     :return: sequential model
     """
     return Sequential([
+        data_augmentation_layer(im_h, im_w),
         layers.experimental.preprocessing.Rescaling(1. / 255, input_shape=(im_h, im_w, 3)),
         layers.Conv2D(16, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
@@ -47,3 +49,20 @@ def student_model(im_h, im_w, n_cl):
         layers.Dense(64, activation='relu'),
         layers.Dense(n_cl)
     ])
+
+
+def data_augmentation_layer(im_h, im_w):
+    """
+    Data augmentation layer to fight with overfitting
+    :param im_h: image height
+    :param im_w: image width
+    :return: sequential model for data augmentation
+    """
+    return Sequential(
+        [
+            layers.experimental.preprocessing.RandomFlip("horizontal", input_shape=(im_h, im_w, 3)),
+            layers.experimental.preprocessing.RandomRotation(0.1),
+            layers.experimental.preprocessing.RandomZoom(0.1),
+        ]
+    )
+
