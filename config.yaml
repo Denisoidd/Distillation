@@ -8,3 +8,15 @@ teacher:
     save_path: /saved_model_teacher
 
     val_split: 0.2 #20 percents of data for validation
+
+student:
+  train:
+    b_s: 32
+    epochs: 10
+    im_h: 180
+    im_w: 180
+    n_classes: 5
+    save_path: /saved_model_student
+
+    val_split: 0.2 #20 percents of data for validation
+

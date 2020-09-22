@@ -24,3 +24,26 @@ def teacher_model(im_h, im_w, n_cl):
         layers.Dense(128, activation='relu'),
         layers.Dense(n_cl)
     ])
+
+
+def student_model(im_h, im_w, n_cl):
+    """
+    Reduced from teacher_model
+    :param im_h: image height
+    :param im_w: image width
+    :param n_cl: number of flowers classes
+    :return: sequential model
+    """
+    return Sequential([
+        layers.experimental.preprocessing.Rescaling(1. / 255, input_shape=(im_h, im_w, 3)),
+        layers.Conv2D(16, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(32, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(64, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Flatten(),
+        layers.Dropout(0.3),
+        layers.Dense(64, activation='relu'),
+        layers.Dense(n_cl)
+    ])
