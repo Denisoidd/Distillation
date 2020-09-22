@@ -1,4 +1,6 @@
-from tensorflow.keras.models import Sequential
+import pathlib
+
+from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras import layers
 
 
@@ -65,4 +67,17 @@ def data_augmentation_layer(im_h, im_w):
             layers.experimental.preprocessing.RandomZoom(0.1),
         ]
     )
+
+
+# def distillation_model(im_h, im_w, n_cl):
+#     # load trained teacher model and freeze it
+#     teach_model = load_model(str(pathlib.Path(__file__).parent.absolute()) + "/saved_model_teacher", compile=False)
+#     teach_model.trainable = False
+#
+#     # check freeze
+#     assert teacher_model.trainable == False, 'teacher model should be frozen'
+#
+#     # create student network
+#     stud_model = student_model(im_h, im_w, n_cl)
+
 
