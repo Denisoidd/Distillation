@@ -104,6 +104,15 @@ for ep in range(n_ep):
         # gradient descent
         optimizer.apply_gradients(zip(grads, stud_model.trainable_weights))
 
+        # print some info
+        print("Epoch {}, step {}, loss {:5f}".format(ep, step, loss))
+
+    # saving model
+    stud_model.save(str(pathlib.Path(__file__).parent.absolute()) + "/saved_model_distillation")
+
+    # TODO: create accuracy metrics
+    # TODO: create validation loop
+
 
 
 
