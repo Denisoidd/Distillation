@@ -5,6 +5,7 @@ from tensorflow.keras.models import load_model
 from model import student_model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import KLDivergence, SparseCategoricalCrossentropy
+from tensorflow.keras.metrics import SparseCategoricalAccuracy
 
 # download dataset with flowers 5 different classes
 dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
@@ -79,6 +80,10 @@ optimizer = Adam()
 cross_entr = SparseCategoricalCrossentropy(from_logits=True)
 kl_div = KLDivergence()
 
+# Prepare the metrics.
+train_acc_metric = SparseCategoricalAccuracy()
+val_acc_metric = SparseCategoricalAccuracy()
+
 # training distillation loop
 for ep in range(n_ep):
     for step, (x, y) in enumerate(train_ds):
@@ -87,7 +92,8 @@ for ep in range(n_ep):
 
         with tf.GradientTape() as tape:
             # forward pass of student model
-            student_pred = stud_model(x)
+            student_pred = stud_model(x, training=True)
+            assert stud_model.trainable == True, 'Student model should be trainable'
 
             # hard labels loss
             loss_hard = cross_entr(y, student_pred)
@@ -109,6 +115,11 @@ for ep in range(n_ep):
 
     # saving model
     stud_model.save(str(pathlib.Path(__file__).parent.absolute()) + "/saved_model_distillation")
+
+    for x_val, y_val in enumerate(val_ds):
+        # forward pass of student model
+        student_val_pred = stud_model(x_val, training=False)
+        assert stud_model.trainable == False, 'Student model should not be trainable in val'
 
     # TODO: create accuracy metrics
     # TODO: create validation loop
