@@ -117,7 +117,7 @@ for ep in range(n_ep):
         print("Epoch {}, step {}, loss {:5f}".format(ep, step, loss))
 
     # get result of train accuracy metric
-    print("Train accuracy over 1 epoch is {:4f}".format(train_acc_metric.result()))
+    print("Train accuracy is {:4f}".format(train_acc_metric.result()))
 
     # reset metric
     train_acc_metric.reset_states()
@@ -134,7 +134,7 @@ for ep in range(n_ep):
         val_acc_metric.update_state(y_val, student_val_pred)
 
     # get result of train accuracy metric
-    print("Val accuracy over 1 epoch is {:4f}".format(val_acc_metric.result()))
+    print("Val accuracy is {:4f}".format(val_acc_metric.result()))
 
     # reset metric
     val_acc_metric.reset_states()
