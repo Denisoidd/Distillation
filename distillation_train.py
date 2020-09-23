@@ -104,6 +104,9 @@ for ep in range(n_ep):
             # final loss value
             loss = alpha * loss_hard + (1 - alpha) * loss_soft
 
+        # update train accuracy metric
+        train_acc_metric.update_state(y, student_pred)
+
         # calculate gradients
         grads = tape.gradient(loss, stud_model.weights)
 
@@ -113,6 +116,12 @@ for ep in range(n_ep):
         # print some info
         print("Epoch {}, step {}, loss {:5f}".format(ep, step, loss))
 
+    # get result of train accuracy metric
+    print("Train accuracy over 1 epoch is {:4f}".format(train_acc_metric.result()))
+
+    # reset metric
+    train_acc_metric.reset()
+
     # saving model
     stud_model.save(str(pathlib.Path(__file__).parent.absolute()) + "/saved_model_distillation")
 
@@ -121,14 +130,12 @@ for ep in range(n_ep):
         student_val_pred = stud_model(x_val, training=False)
         assert stud_model.trainable == False, 'Student model should not be trainable in val'
 
-    # TODO: create accuracy metrics
-    # TODO: create validation loop
+        # update val accuracy metric
+        val_acc_metric.update_state(y_val, student_val_pred)
 
+    # get result of train accuracy metric
+    print("Train accuracy over 1 epoch is {:4f}".format(val_acc_metric.result()))
 
-
-
-
-
-
-
+    # reset metric
+    val_acc_metric.reset()
 
