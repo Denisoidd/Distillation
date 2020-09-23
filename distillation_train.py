@@ -125,7 +125,7 @@ for ep in range(n_ep):
     # saving model
     stud_model.save(str(pathlib.Path(__file__).parent.absolute()) + "/saved_model_distillation")
 
-    for x_val, y_val in enumerate(val_ds):
+    for x_val, y_val in val_ds:
         # forward pass of student model
         student_val_pred = stud_model(x_val, training=False)
         assert stud_model.trainable == False, 'Student model should not be trainable in val'
@@ -134,7 +134,7 @@ for ep in range(n_ep):
         val_acc_metric.update_state(y_val, student_val_pred)
 
     # get result of train accuracy metric
-    print("Train accuracy over 1 epoch is {:4f}".format(val_acc_metric.result()))
+    print("Val accuracy over 1 epoch is {:4f}".format(val_acc_metric.result()))
 
     # reset metric
     val_acc_metric.reset_states()
