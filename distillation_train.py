@@ -120,7 +120,7 @@ for ep in range(n_ep):
     print("Train accuracy over 1 epoch is {:4f}".format(train_acc_metric.result()))
 
     # reset metric
-    train_acc_metric.reset()
+    train_acc_metric.reset_states()
 
     # saving model
     stud_model.save(str(pathlib.Path(__file__).parent.absolute()) + "/saved_model_distillation")
@@ -137,5 +137,5 @@ for ep in range(n_ep):
     print("Train accuracy over 1 epoch is {:4f}".format(val_acc_metric.result()))
 
     # reset metric
-    val_acc_metric.reset()
+    val_acc_metric.reset_states()
 
