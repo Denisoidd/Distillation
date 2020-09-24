@@ -78,23 +78,29 @@ Number of neurons | Test Accuracy
 ------------ | -------------
 Student - 64 (1M param)| 0.741
 Student - 32 (500K param)| 0.734
-Student - 16 (250K param)| **write**
+Student - 16 (250K param)| 0.730
 Student - 8 (125K param)| **write**
 
-**WRITE:** Conclusion about size reduction parameter in distillation problem
+As we can see the accuracy goes slowly down when we reduce the number of parameters of the student network. It could be related to two factors. First - distillation helps us to teach `student` network very efficiently so even when we drastically reduce the number of parameters we still obtain good accuracy results. Second - the `teacher` network is not the most optimal network for that task (too complex) so smaller models perform even better. To know which variant is correct we need to make more experiments with `student` networks fully trained on dataset with the same architecture as above.
 
 4. The last part of experiment was inspired by the [On the Effacy of KD](https://openaccess.thecvf.com/content_ICCV_2019/papers/Cho_On_the_Efficacy_of_Knowledge_Distillation_ICCV_2019_paper.pdf). The main concept behind this article is that the early stop in the training process of `teacher` could be a more representable and better example for the training process of `student` network. So in that experiment we've trained `teacher` model for 3 epochs (instead of 15) and then proceed to distillation.
 
 Network | Test Accuracy
 ------------ | -------------
-Teacher (3 epochs) | **write**
-Student (15 epochs)| **write**
+Teacher (3 epochs) | 0.643
+Student (15 epochs)| 0.737
 
-**WRITE:** Conclusion about early stop parameter in distillation problem
+The results of this approach look prominent. As it was shown in the article that was discussed above, we don't need train `teacher` network for the whole cycle we just need to have few epochs and then we can launch directly the distillation process. In that experiment we obtain almost the same results as from fully trained `teacher` network. Few epochs training process learns `teacher` network to obtain a more complete and more erroneus distribution which has much more useful information for the `student` network. It could be interesting to to dive into and test this approach more.
 
 # Conclusion
 
-As we seen **WRITE**
+To conclude, in that work we've tested different distillation approaches: variation of temperature parameter, early-stop strategy and also tested different `student` distilated architectures. In my experiments I haven't succeded to show the importance of the **temperature** parameter, I think the problem might be connected with the choice of **alpha** parameter or with the choice of `teacher` architecture. Also it can be useful to test a bigger range of **temperature** parameter.
+
+For the model compression test (third part of experiment) we can't tell precisely if achieved results are related to distillation success or just more correct models were applied. We need to make more experiments on that.
+
+And the last part of experiment might shown us that we are not obliged to train the teacher for the whole training process we could do it just for several epochs and then directly go to the distillation process. 
+
+In my opinion, in order to understand if the distillation process works in our task first of all we need to test many different `teacher` models in order to understand what works best and after it go to the distillation process. 
 
 # Future work
 
@@ -102,3 +108,4 @@ For the future work it could be very interesting to test the following approache
 * At first, it must be interesting to change the **alpha** parameter to test the importance of each loss. It would be very interesting to test some border cases where **alpha** equals 0 or 1
 * During the `student` training process recuperate not only output of the `teacher` but also recuperate some middle values in order to learn the representation of `teacher` network more thoroughly 
 * One of the very interesting experiments could be to try to estimate the possible network sizes of `teacher` and `student` which provide the best performance. From one side `teacher` should be complex enough to be able to give sufficient information to the `student` however as it was shown in [On the Effacy of KD](https://openaccess.thecvf.com/content_ICCV_2019/papers/Cho_On_the_Efficacy_of_Knowledge_Distillation_ICCV_2019_paper.pdf) very deep `teacher` networks tend to be not very good teachers
+* Also it could be interesting to train `student` models with different configurations fully on the dataset in order to compare them with its distilated variants 
