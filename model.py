@@ -6,8 +6,7 @@ from tensorflow.keras import layers
 
 def teacher_model(im_h, im_w, n_cl):
     """
-    It's a simple sequential model for flowers classification problem.
-    It was mostly inspired by https://www.tensorflow.org/tutorials/images/classification
+    It's a simple sequential model for classification problem
     :param im_h: image height
     :param im_w: image width
     :param n_cl: number of flowers classes
@@ -21,6 +20,8 @@ def teacher_model(im_h, im_w, n_cl):
         layers.Conv2D(32, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
         layers.Conv2D(64, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(128, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
         layers.Flatten(),
         layers.Dropout(0.3),
@@ -45,6 +46,8 @@ def student_model(im_h, im_w, n_cl):
         layers.Conv2D(32, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
         layers.Conv2D(64, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(128, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
         layers.Flatten(),
         layers.Dropout(0.3),
