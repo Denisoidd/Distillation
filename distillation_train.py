@@ -128,7 +128,7 @@ for ep in range(n_ep):
     for x_val, y_val in val_ds:
         # forward pass of student model
         student_val_pred = stud_model(x_val, training=False)
-        assert stud_model.trainable == False, 'Student model should not be trainable in val'
+        # assert stud_model.trainable == False, 'Student model should not be trainable in val'
 
         # update val accuracy metric
         val_acc_metric.update_state(y_val, student_val_pred)
