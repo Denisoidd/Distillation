@@ -56,7 +56,7 @@ In the third part of experiment we've tried to reduce the student model as far a
 
 **WRITE:** Conclusion about size reduction parameter in distillation problem
 
-The last part of experiment was inspired by the [Effacy of KD](https://openaccess.thecvf.com/content_ICCV_2019/papers/Cho_On_the_Efficacy_of_Knowledge_Distillation_ICCV_2019_paper.pdf). The main concept behind this article is that the early stop in the training process of `teacher` could be a more representable and better example for the training process of `student` network.
+The last part of experiment was inspired by the [On the Effacy of KD](https://openaccess.thecvf.com/content_ICCV_2019/papers/Cho_On_the_Efficacy_of_Knowledge_Distillation_ICCV_2019_paper.pdf). The main concept behind this article is that the early stop in the training process of `teacher` could be a more representable and better example for the training process of `student` network.
 
 **WRITE:** Conclusion about early stop parameter in distillation problem
 
