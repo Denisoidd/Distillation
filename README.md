@@ -60,3 +60,13 @@ The last part of experiment was inspired by the [On the Effacy of KD](https://op
 
 **WRITE:** Conclusion about early stop parameter in distillation problem
 
+# Conclusion
+
+As we seen **WRITE**
+
+# Future work
+
+For the future work it could be very interesting to test the following approaches:
+* At first, it must be interesting to change the **alpha** parameter to test the importance of each loss. It would be very interesting to test some border cases where **alpha** equals 0 or 1
+* During the `student` training process recuperate not only output of the `teacher` but also recuperate some middle values in order to learn the representation of `teacher` network more thoroughly 
+* One of the very interesting experiments could be to try to estimate the possible network sizes of `teacher` and `student` which provide the best performance. From one side `teacher` should be complex enough to be able to give sufficient information to the `student` however as it was shown in [On the Effacy of KD](https://openaccess.thecvf.com/content_ICCV_2019/papers/Cho_On_the_Efficacy_of_Knowledge_Distillation_ICCV_2019_paper.pdf) very deep `teacher` networks tend to be not very good teachers
