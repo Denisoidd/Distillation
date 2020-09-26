@@ -79,6 +79,7 @@ Number of neurons | Test Accuracy
 Student - 64 (1M param)| 0.741
 Student - 32 (600K param)| 0.734
 Student - 16 (345K param)| 0.730
+Student - 8 (220K param)| **write**
 
 As we can see the accuracy goes slowly down when we reduce the number of parameters of the student network. It could be related to two factors. First - distillation helps us to teach `student` network very efficiently so even when we drastically reduce the number of parameters we still obtain good accuracy results. Second - the `teacher` network is not the most optimal network for that task (too complex) so smaller models perform even better. To know which variant is correct we need to make more experiments with `student` networks fully trained on dataset with the same architecture as above.
 
